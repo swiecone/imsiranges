@@ -1,0 +1,88 @@
+#header {
+    position: relative;
+    top: -10px;
+    background-color: #00A0B0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+	height: 40px;
+}
+
+h1 {
+    font-family: Lobster;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+form {
+    font-family: Verdana, Arial, sans-serif;
+}
+
+p {
+    font-family: Verdana, Arial, sans-serif;
+    display: inline-block;
+}
+
+input {
+    font-family: Verdana, Arial, sans-serif;
+    color: #777;
+}
+
+textarea {
+	vertical-align: top;
+	width: 400px;
+	color: #777;
+}
+
+#wrapper {
+    border-left: 1px solid #888;
+    border-right: 1px solid #888;
+    border-bottom: 1px solid #888;
+    position: relative;
+    top: -10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    box-shadow: 3px 3px 3px #444;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 0.8em;
+}
+
+#inputs {
+	width: 200px;
+	clear: both;
+}
+
+#inputs input {
+	width: 100%;
+	clear: both;
+}
+
+#email{
+	float:right;
+	margin-right: 5px;
+	padding-top: 5px;
+	font-size: 16px;
+	font-family: Verdana, sans-serif;
+	color: #00A0B0;
+}
+
+a:hover {
+
+    color: ##00737f;
+}
+
+table {
+width:90%;
+border-top:1px solid #e5eff8;
+border-right:1px solid #e5eff8;
+margin:1em auto;
+border-collapse:collapse;
+}
+
+td {
+color:#678197;
+border-bottom:1px solid #e5eff8;
+border-left:1px solid #e5eff8;
+padding:.3em 1em;
+text-align:center;
+}
