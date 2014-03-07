@@ -12,11 +12,12 @@
 <h1>Welcome to Imsi Ranges</h1>
 </div>
     
+     <div id="wrapper">
+        <div id="inputs">
     
 <a href="?addimsi" ><p id="email">Add IMSI to imsiDB</p></a>
 
-    <div id="wrapper">
-        <div id="inputs">
+   
 <table border="1">
 <tr>
 <th>Country</th>

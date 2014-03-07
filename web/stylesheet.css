@@ -58,7 +58,7 @@ textarea {
 }
 
 #email{
-	float:right;
+	float:center;
 	margin-right: 5px;
 	padding-top: 5px;
 	font-size: 16px;
