@@ -1,8 +1,8 @@
 <?php 
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/includes/helpers.inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/helpers.inc.php';
 
-include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/includes/magicquotes.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/magicquotes.inc.php';
 
 //If you click on "add joke" link, then the form is displayed. 
 
@@ -18,7 +18,7 @@ if(isset($_GET['addimsi']))
 
 if(isset($_GET['submitimsi']))
 {
-include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/includes/db.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	
     
 	try{
@@ -46,7 +46,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/includes/db.inc.php';
 if(isset($_GET['deleteimsi']))
 {	
 
-include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/includes/db.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
     
     
 	
@@ -70,7 +70,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/includes/db.inc.php';
 
 // Retrieve from the table all the jokes, add them to a joke array and include this array in a jokes site to be displayed. 
 
-include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/includes/db.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 
 
 
