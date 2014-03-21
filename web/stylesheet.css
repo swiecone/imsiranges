@@ -66,9 +66,18 @@ textarea {
 	color: #00A0B0;
 }
 
+a {
+    color:#008693;
+    size:16;
+}
+
 a:hover {
 
-    color: ##00737f;
+    color: #00d0e5;
+}
+
+#center {
+    text-align: center;
 }
 
 table {

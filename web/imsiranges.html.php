@@ -3,19 +3,18 @@
 <head>
 	<meta charset="utf-8"> 
 	<title> List of Operators, Countries and associated IMSI ranges</title>
-    <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
-        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
+ <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+ <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
 </head>
 
 <body>
-<div id="header"> 
-<h1>Welcome to Imsi Ranges</h1>
-</div>
-    
-     <div id="wrapper">
-        <div id="inputs">
-    
-<a href="?addimsi" ><p id="email">Add IMSI to imsiDB</p></a>
+	<div id="header"><h1>Welcome to Imsi Ranges</h1></div>
+
+<div id="wrapper">
+
+<div align="center"><a href="?addimsi" >Add IMSI to imsiDB</a></div>
 
    
 <table border="1">
@@ -30,7 +29,7 @@
     
 </tr>
 <?php foreach ($imsiranges as $imsirange): ?>
-	<tr>
+	<tr align='center'>
 	<blockquote>
 		<td>
 		<?php echo
@@ -39,30 +38,30 @@
 		</td>
         
         <td>
-		<?php echo htmlspecialchars($imsirange['operator'], ENT_QUOTES,'UTF-8');	
+		<?php echo htmlout($imsirange['operator']);	
 				?>			
 		</td>	
         
         <td>
 		<?php 
 
-$imsi = $imsirange['mcc'] . $imsirange['mnc'];
+$imsi = " ". $imsirange['mcc'] . $imsirange['mnc']." ";
 echo $imsi;
 				?>			
 		</td>	
        
         
         <td>
-		<?php echo htmlspecialchars($imsirange['mcc'], ENT_QUOTES,'UTF-8');	
+		<?php echo htmlout($imsirange['mcc']);	
 				?>			
 		</td>	
         
         <td>
-        		<?php echo htmlspecialchars($imsirange['mnc'], ENT_QUOTES,'UTF-8');	
+        		<?php echo htmlout($imsirange['mnc']);	
 				?>			
 		</td>	
         <td>
-        		<?php echo htmlspecialchars($imsirange['virtualoperator'], ENT_QUOTES,'UTF-8');	
+        		<?php echo htmlout($imsirange['virtualoperator']);	
 				?>			
 		</td>	
         
@@ -71,7 +70,7 @@ echo $imsi;
 		<form  action="?deleteimsi" method="post">
 			<input type="hidden" name="id" 
 					value="<?php echo $imsirange['id'];  ?>"> 
-			<input type="submit" value="delete"><br>
+		<input type="submit" value="Delete">
 			
 </form>	
 		
@@ -82,11 +81,10 @@ echo $imsi;
 
 	<?php endforeach; ?>
 </table>
+    </div>
     
-	</div>
-        </div>	
 		
-</p>
+
 </body>
 
 </html>
