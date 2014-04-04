@@ -4,7 +4,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/helpers.inc.p
 
 include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/magicquotes.inc.php';
 
-//If you click on "add joke" link, then the form is displayed. 
+// *******************************************************************************************
+//User clicks on "add IMSI" link and this triggers the request for the form to insert the IMSI
+// *******************************************************************************************
 
 if(isset($_GET['addimsi']))
 {
@@ -13,14 +15,90 @@ if(isset($_GET['addimsi']))
 	}
 
 
-
-//If there is variable called "joketext", then add the joke to the database. 
+// **********************************************************************
+// If the user clicks the submit button, the submitimsi will be 
+// invocked, and we need to process the request of insertion to database. 
+// **********************************************************************
 
 if(isset($_GET['submitimsi']))
 {
 include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	
-//Get all countries to check if what the user has inserted is already in the DB
+
+// ******************************************************************************************
+// Get all operators from ImsiDB to check if what the user has inserted is already in the DB
+// ******************************************************************************************
+
+	try{
+		$sql = 'SELECT operator FROM operator';
+		$result = $pdo->query($sql);
+	}
+	catch(PDOException $e)
+	{
+		$error = 'Error adding submitted IMSI range: '. $e->getMessage();
+		include 'error.html.php';
+		exit();
+	}
+	$operatorInDB = FALSE;
+
+// **************************************************************
+// Loop to check if the operator is in the DB.
+// The parameters are passed to upper case before being comparted 
+// **************************************************************
+
+	foreach ($result as $row)
+	{
+			$var = strtoupper($row['operator']);
+			$operators[] = array('operator' => $var);
+		
+			$operatorfromform = strtoupper($_POST['operator']);
+
+// *********************************************************
+//If country and insertion are the same, do not insert in DB 
+// *********************************************************
+
+			if ($var == $operatorfromform)
+			{
+				echo "Operator already in the data base";
+				$operatorInDB = TRUE;
+				$insertoperator = 'TRUE';
+			}
+	}
+
+// ****************************************************************************
+// If the variable $operatorInDB is false, then $insertoperator should be false
+// And we need to insert the country in the data base.
+// ****************************************************************************
+
+	if($operatorInDB == FALSE)
+	{
+	//make $insertoperator false, which means the operator is NOT in the database.
+	$insertoperator = 'FALSE';		
+	
+		try{
+		$sql = 'INSERT INTO operator SET 
+				operator=:operator';	
+		$s = $pdo->prepare($sql);
+		$s->bindValue(':operator',$operatorfromform);		
+		$s->execute();
+		$confirmOperatorInDB = "Operator inserted in Operator table!!";
+		}
+		catch(PDOException $e)
+		{
+		$error = 'Error adding submitted Operator in Data Base.'. $e->getMessage();
+		include 'error.html.php';
+		exit();
+		}
+	}
+	else $confirmOperatorInDB = "Operator already in the data base.";
+
+
+// ******* END OF OPERATOR INSERTION IN DB ;) *********
+
+
+// *****************************************************************************
+// Get all countries to check if what the user has inserted is already in the DB
+// *****************************************************************************
 	try{
 		$sql = 'SELECT country FROM country';
 		$result = $pdo->query($sql);
@@ -43,7 +121,12 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 			$countries[] = array('country' => $var);
 		
 			$countryfromform = strtoupper($_POST['country']);
-			//If country and insertion are the same, do not insert in DB 
+
+// **********************************************************
+// If country and insertion are the same, do not insert in DB 
+// **********************************************************
+
+
 	if ($var == $countryfromform){
 				echo "Country in data base";
 				$countryInDB = TRUE;
@@ -51,8 +134,11 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 				}
 		}
 
+// **************************************************************************
 // If the variable $countryInDB is false, then $insertcountry should be false
 // And we should NOT insert the country in the data base. 
+// **************************************************************************
+
 	if($countryInDB == FALSE)
 	{
 	$insertcountry = 'FALSE';		
@@ -63,7 +149,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 		$s = $pdo->prepare($sql);
 		$s->bindValue(':country',$countryfromform);		
 		$s->execute();
-		$confirmdbinsert = "data inserted!!";
+		$confirmCountryInDB = "Country inserted into DB!!";
 		}
 		catch(PDOException $e)
 		{
@@ -72,12 +158,14 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 		exit();
 		}
 	}
+	else $confirmdbinsert = "country already in the data base.";
 	include 'countrysubmited.html.php';
 	exit();
 }
 		
 
-//If variable is "deletejoke" then an action of deletion is performed in order to erase the joke.  
+// If we get 'deleteimsi' is that someone did not like that country operator,
+// and we UNFORTUNATELY need to delete it from the db.... da da.
 
 if(isset($_GET['deleteimsi']))
 {	
