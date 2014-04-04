@@ -54,17 +54,12 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 //If the variable $countryInDB is false, then $insertcountry should be falta
 	if($countryInDB == FALSE)
 	{
-		$insertcountry = 'FALSE';		
-	}
-		include 'countrysubmited.html.php';
-		exit();
 /*
-if(!$countryInDB){
 	try{
 	$sql = 'INSERT INTO country SET 
 			country=:country';	
 	$s = $pdo->prepare($sql);
-	$s->bindValue(':country',$_POST['country']);		
+	$s->bindValue(':country',$countryfromform);		
 	$s->execute();
 	}
 	catch(PDOException $e)
@@ -73,10 +68,13 @@ if(!$countryInDB){
 		include 'error.html.php';
 		exit();
 	}
-  header('Location: .');
-*/
-}
+  */
+	$insertcountry = 'FALSE';		
+		
 
+}
+		include 'countrysubmited.html.php';
+		exit();
 
 //If variable is "deletejoke" then an action of deletion is performed in order to erase the joke.  
 
@@ -139,8 +137,3 @@ foreach($result as $row)
 }
 
 include 'imsiranges.html.php';
-
-
-
-
-
