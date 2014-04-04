@@ -51,30 +51,31 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 				}
 		}
 
-//If the variable $countryInDB is false, then $insertcountry should be falta
+// If the variable $countryInDB is false, then $insertcountry should be false
+// And we should NOT insert the country in the data base. 
 	if($countryInDB == FALSE)
 	{
-/*
-	try{
-	$sql = 'INSERT INTO country SET 
-			country=:country';	
-	$s = $pdo->prepare($sql);
-	$s->bindValue(':country',$countryfromform);		
-	$s->execute();
-	}
-	catch(PDOException $e)
-	{
+	$insertcountry = 'FALSE';		
+	
+		try{
+		$sql = 'INSERT INTO country SET 
+				country=:country';	
+		$s = $pdo->prepare($sql);
+		$s->bindValue(':country',$countryfromform);		
+		$s->execute();
+		$confirmdbinsert = "data inserted!!";
+		}
+		catch(PDOException $e)
+		{
 		$error = 'Error adding submitted Country in Data Base.'. $e->getMessage();
 		include 'error.html.php';
 		exit();
+		}
 	}
-  */
-	$insertcountry = 'FALSE';		
-		
-
+	include 'countrysubmited.html.php';
+	exit();
 }
-		include 'countrysubmited.html.php';
-		exit();
+		
 
 //If variable is "deletejoke" then an action of deletion is performed in order to erase the joke.  
 

@@ -18,11 +18,15 @@
  echo " ". $acountry['country']. ", "; ?>
 
 <?php endforeach; ?>
-
+<p>
 <?php 	echo '<br>'.'This is the country send by the user: '. $countryfromform. '<br>';
  	echo 'Value of the comparison CountryInDb: '. $insertcountry;
 ?>
+</p>
 
+<p>
+<?php echo "The data Country has been inserted into the data base: ". $confirmdbinsert ?>
+</p>
 
 </body>
 
