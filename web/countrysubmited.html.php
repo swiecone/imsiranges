@@ -20,7 +20,7 @@
 <?php endforeach; ?>
 
 <?php 	echo '<br>'.'This is the country send by the user: '. $countryfromform. '<br>';
- 	echo 'Value of the comparison CountryInDb: '. $insertarpais;
+ 	echo 'Value of the comparison CountryInDb: '. $insertcountry;
 ?>
 
 

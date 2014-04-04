@@ -33,21 +33,29 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	}
 	$countryInDB = FALSE;
 
+// Loop to check if the country is in the DB.
+// The parameters are passed to upper case before comparing. 
 
-	foreach ($result as $row){
+	foreach ($result as $row)
+	{
 			$var = $row['country'];
+			$var = strtoupper($var);	
 			$countries[] = array('country' => $var);
-			$var = strtoupper($var);
+		
 			$countryfromform = strtoupper($_POST['country']);
 			//If country and insertion are the same, do not insert in DB 
 	if ($var == $countryfromform){
 				echo "Country in data base";
 				$countryInDB = TRUE;
-				$insertarpais = 'TRUE';
+				$insertcountry = 'TRUE';
 				}
-	else $insertarpais = 'FALSE';
 		}
 
+//If the variable $countryInDB is false, then $insertcountry should be falta
+	if($countryInDB == FALSE)
+	{
+		$insertcountry = 'FALSE';		
+	}
 		include 'countrysubmited.html.php';
 		exit();
 /*
