@@ -20,17 +20,10 @@ if(isset($_GET['submitimsi']))
 {
 include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	
-    
+//Get all countries to check if what the user has inserted is already in the DB
 	try{
-	$sql = 'INSERT INTO joke SET 
-			joketext=:joketext,
-			jokedate= CURDATE(),authorid=1';	
-	$s = $pdo->prepare($sql);
-	$s->bindValue(':joketext',$_POST['joketext']);		
-	$s->execute();
-
-	include 'thanksub.html.php';
-	exit();
+		$sql = 'SELECT country FROM country';
+		$result = $pdo->query($sql);
 	}
 	catch(PDOException $e)
 	{
@@ -38,6 +31,42 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 		include 'error.html.php';
 		exit();
 	}
+	$countryInDB = FALSE;
+
+
+	foreach ($result as $row){
+			$var = $row['country'];
+			$countries[] = array('country' => $var);
+			$var = strtoupper($var);
+			$countryfromform = strtoupper($_POST['country']);
+			//If country and insertion are the same, do not insert in DB 
+	if ($var == $countryfromform){
+				echo "Country in data base";
+				$countryInDB = TRUE;
+				$insertarpais = 'TRUE';
+				}
+	else $insertarpais = 'FALSE';
+		}
+
+		include 'countrysubmited.html.php';
+		exit();
+/*
+if(!$countryInDB){
+	try{
+	$sql = 'INSERT INTO country SET 
+			country=:country';	
+	$s = $pdo->prepare($sql);
+	$s->bindValue(':country',$_POST['country']);		
+	$s->execute();
+	}
+	catch(PDOException $e)
+	{
+		$error = 'Error adding submitted Country in Data Base.'. $e->getMessage();
+		include 'error.html.php';
+		exit();
+	}
+  header('Location: .');
+*/
 }
 
 

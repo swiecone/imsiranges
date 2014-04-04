@@ -27,12 +27,13 @@
 				<input type="text" value="mnc" name="mnc">
             
         <label for="virtualoperator">Is the operator virtual? If so, tick the box:</label>
-				<input type='checkbox' value="virtualop" name="virtualop">
-         
-		</div>
-<br>   
-    <div><input type="submit" value="submit"></div>
+				<input style="align-left" type='checkbox' value="virtualop" name="virtualop">
+      
+   <input type="submit" value="submit">
 </form>
+   
+        </div>
 
+        </div>
 </body>
 </html>
