@@ -4,9 +4,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/helpers.inc.p
 
 include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/magicquotes.inc.php';
 
-// *******************************************************************************************
-//User clicks on "add IMSI" link and this triggers the request for the form to insert the IMSI
-// *******************************************************************************************
+// ********************************************************************************************************
+// User clicks on "add IMSI" link and this triggers the request for the form to insert the IMSI information
+// ********************************************************************************************************
 
 if(isset($_GET['addimsi']))
 {
@@ -24,7 +24,6 @@ if(isset($_GET['submitimsi']))
 {
 include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	
-
 // ******************************************************************************************
 // Get all operators from ImsiDB to check if what the user has inserted is already in the DB
 // ******************************************************************************************
@@ -59,10 +58,13 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 
 			if ($var == $operatorfromform)
 			{
-				echo "Operator already in the data base";
 				$operatorInDB = TRUE;
 				$insertoperator = 'TRUE';
+				$confirmOperatorInDB = "Operator already in the data base.";
+				echo "Operator already in the data base";
 			}
+			
+	
 	}
 
 // ****************************************************************************
@@ -74,6 +76,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	{
 	//make $insertoperator false, which means the operator is NOT in the database.
 	$insertoperator = 'FALSE';		
+	
+	// Add Operator inserted by user the last element of the operators
+	// And then add the operator to the Data Base. 
+	$operators[] = array('operator' => $operatorfromform); 
 	
 		try{
 		$sql = 'INSERT INTO operator SET 
@@ -90,11 +96,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 		exit();
 		}
 	}
-	else $confirmOperatorInDB = "Operator already in the data base.";
-
-
 // ******* END OF OPERATOR INSERTION IN DB ;) *********
-
 
 // *****************************************************************************
 // Get all countries to check if what the user has inserted is already in the DB
@@ -128,9 +130,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 
 
 	if ($var == $countryfromform){
-				echo "Country in data base";
 				$countryInDB = TRUE;
 				$insertcountry = 'TRUE';
+				echo "Country in data base";
+				$confirmdbinsert = "country already in the data base.";
 				}
 		}
 
@@ -141,8 +144,14 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 
 	if($countryInDB == FALSE)
 	{
+	// ************************************************************************	
+	// State that the country inserted is NOT in the data base
+	// And add it to the array of countries that will be displayed to the user
+	// ************************************************************************
+		
 	$insertcountry = 'FALSE';		
-	
+	$countries[] = array('country' => $countryfromform);
+
 		try{
 		$sql = 'INSERT INTO country SET 
 				country=:country';	
@@ -158,10 +167,35 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 		exit();
 		}
 	}
-	else $confirmdbinsert = "country already in the data base.";
-	include 'countrysubmited.html.php';
+
+// ***************************************************************************
+// Get all mcc's to check if what the user has inserted is already in the DB
+// ***************************************************************************
+	try{
+		$sql = 'SELECT mcc FROM mcc';
+		$result = $pdo->query($sql);
+	}
+	catch(PDOException $e)
+	{
+		$error = 'Error adding submitted IMSI range: '. $e->getMessage();
+		include 'error.html.php';
+		exit();
+	}
+	$mccInDB = FALSE;
+
+
+
+
+
+	include 'imsisubmited.html.php';
 	exit();
 }
+
+
+
+
+
+
 		
 
 // If we get 'deleteimsi' is that someone did not like that country operator,
