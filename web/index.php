@@ -61,7 +61,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 				$operatorInDB = TRUE;
 				$insertoperator = 'TRUE';
 				$confirmOperatorInDB = "Operator already in the data base.";
-				echo "Operator already in the data base";
+			//	echo "Operator already in the data base";
 			}
 			
 	
@@ -132,14 +132,14 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	if ($var == $countryfromform){
 				$countryInDB = TRUE;
 				$insertcountry = 'TRUE';
-				echo "Country in data base";
+				//echo "Country in data base";
 				$confirmdbinsert = "country already in the data base.";
 				}
 		}
 
 // **************************************************************************
 // If the variable $countryInDB is false, then $insertcountry should be false
-// And we should NOT insert the country in the data base. 
+// And we should insert the country in the data base. 
 // **************************************************************************
 
 	if($countryInDB == FALSE)
@@ -183,9 +183,124 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	}
 	$mccInDB = FALSE;
 
+// **************************************
+// Loop to check if the MCC is in the DB.
+// **************************************
+
+	foreach ($result as $row)
+	{
+			$var = $row['mcc'];
+			$mccs[] = array('mcc' => $var);
+			$mccfromform = $_POST['mcc'];
+
+if ($var == $mccfromform){
+				$mccInDB = TRUE;
+				$insertmcc = 'TRUE';
+				//echo "Country in data base";
+				$confirmMccInDB = "MCC already in the data base.";
+				}
+		}
+
+// **************************************************************************
+// If the variable $MCCInDB is false, then $insertmcc should be false
+// And we should insert the MCC in the data base. 
+// **************************************************************************
+
+	if($mccInDB == FALSE)
+	{
+	// ************************************************************************	
+	// State that the MCC inserted is NOT in the data base
+	// And add it to the array of countries that will be displayed to the user
+	// ************************************************************************
+		
+	$insertmcc = 'FALSE';		
+	$mccs[] = array('mcc' => $mccfromform);
+
+		try{
+		$sql = 'INSERT INTO mcc SET 
+				mcc=:mcc';	
+		$s = $pdo->prepare($sql);
+		$s->bindValue(':mcc',$mccfromform);		
+		$s->execute();
+		$confirmMccInDB = "MCC inserted into DB!!";
+		}
+		catch(PDOException $e)
+		{
+		$error = 'Error adding submitted MCC in Data Base.'. $e->getMessage();
+		include 'error.html.php';
+		exit();
+		}
+	}
+
+// ***************************************************************************
+// Get all mnc's to check if what the user has inserted is already in the DB
+// ***************************************************************************
+	try{
+		$sql = 'SELECT mnc FROM mnc';
+		$result = $pdo->query($sql);
+	}
+	catch(PDOException $e)
+	{
+		$error = 'Error adding submitted IMSI range: '. $e->getMessage();
+		include 'error.html.php';
+		exit();
+	}
+	$mccInDB = FALSE;
+
+// **************************************
+// Loop to check if the MNC is in the DB.
+// **************************************
+
+	foreach ($result as $row)
+	{
+			$var = $row['mnc'];
+			$mncs[] = array('mnc' => $var);
+			$mncfromform = $_POST['mnc'];
+
+if ($var == $mncfromform){
+				$mncInDB = TRUE;
+				$insertmnc = 'TRUE';
+				//echo "MNC inserted already in data base. ";
+				$confirmMncInDB = "MNC already in the data base.";
+				}
+		}
+
+// **************************************************************************
+// If the variable $mncInDB is false, then $insertmnc should be false
+// And we should insert the MNC in the data base. 
+// **************************************************************************
+
+	if($mncInDB == FALSE)
+	{
+	// ************************************************************************	
+	// State that the country inserted is NOT in the data base
+	// And add it to the array of countries that will be displayed to the user
+	// ************************************************************************
+		
+	$insertmnc = 'FALSE';		
+	$mncs[] = array('mnc' => $mncfromform);
+
+		try{
+		$sql = 'INSERT INTO mnc SET 
+				mnc=:mnc';	
+		$s = $pdo->prepare($sql);
+		$s->bindValue(':mnc',$mncfromform);		
+		$s->execute();
+		$confirmMncInDB = "MNC inserted into DB!!";
+		}
+		catch(PDOException $e)
+		{
+		$error = 'Error adding submitted MNC in Data Base.'. $e->getMessage();
+		include 'error.html.php';
+		exit();
+		}
+	}
 
 
-
+// *********************************************************************
+// We call imsisubmited.html.php in order to present all data inserted
+// This site is a checkpoint and can be later commented or removed
+// *********************************************************************
 
 	include 'imsisubmited.html.php';
 	exit();

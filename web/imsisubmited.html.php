@@ -2,15 +2,22 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8"> 
-	<title> Chekc Country Submited and comparison</title>
+	<title> Check IMSI information Submited and comparison</title>
 </head>
 
 <body>
+<h2> IMSI information submited check site </h2>
+<br>
 
-<h2>Country submited check site</h2>
 
+
+<!-- ************************************************
+Let's show the information for the bloody countries!!
+************************************************* -->
+
+<h3>
 <?php 
- 	echo 'The countries from the data base: '?>
+ 	echo 'The countries from the data base: '?></h3>
 <ol>
 <?php foreach ($countries as $acountry): ?>
 
@@ -26,11 +33,16 @@
 </p>
 
 <p>
-<?php echo "Operator insertion in DB:  ". $confirmOperatorInDB ?>
+<?php echo "Country insertion in DB:  ". $confirmCountryInDB ?>
 </p>
 
-<?php 
- 	echo 'The operators from the data base: '?>
+
+<!-- ************************************************
+Let's show the information for the bloody Operators!!
+************************************************* -->
+
+<h3><?php 
+ 	echo 'The operators from the data base: '?></h3>
 <ol>
 <?php foreach ($operators as $anoperator): ?>
 
@@ -50,7 +62,59 @@
 </p>
 
 
+<!-- ************************************************
+Let's show the information for the bloody MCC's!!
+************************************************* -->
+
+<h3><?php 
+ 	echo 'The MCC from the data base: '?></h3>
+<ol>
+<?php foreach ($mccs as $anmcc): ?>
+
+<?php	
+ echo "<li>". $anmcc['mcc']. "</li>"; ?>
+
+<?php endforeach; ?>
+</ol>
+<p>
+<?php 	echo '<br>'.'This is the MCC send by the user: '. $mccfromform. '<br>';
+ 	echo 'Value of the comparison OperatorInDb: '. $insertmcc;
+?>
+</p>
+
+<p>
+<?php echo "MCC insertion in DB:  ". $confirmMccInDB ?>
+</p>
+
+
+<!-- ************************************************
+Let's show the information for the bloody MNC's!!
+************************************************* -->
+
+<h3><?php 
+ 	echo 'The MCC from the data base: '?></h3>
+<ol>
+<?php foreach ($mncs as $anmnc): ?>
+
+<?php	
+ echo "<li>". $anmnc['mnc']. "</li>"; ?>
+
+<?php endforeach; ?>
+</ol>
+<p>
+<?php 	echo '<br>'.'This is the MNC send by the user: '. $mncfromform. '<br>';
+ 	echo 'Value of the comparison OperatorInDb: '. $insertmnc;
+?>
+</p>
+
+<p>
+<?php echo "MNC insertion in DB:  ". $confirmMncInDB ?>
+</p>
+
 <a href="."> Go back to main menu </a>
+<br>
+<br>
+
 
 </body>
 
