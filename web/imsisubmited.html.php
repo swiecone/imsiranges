@@ -111,6 +111,10 @@ Let's show the information for the bloody MNC's!!
 <?php echo "MNC insertion in DB:  ". $confirmMncInDB ?>
 </p>
 
+<p>
+<?php echo "Virtual Operator Information :  ". $virtualoperator ?>
+</p>
+
 <a href="."> Go back to main menu </a>
 <br>
 <br>

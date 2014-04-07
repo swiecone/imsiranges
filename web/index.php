@@ -127,15 +127,13 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 // **********************************************************
 // If country and insertion are the same, do not insert in DB 
 // **********************************************************
-
-
 	if ($var == $countryfromform){
 				$countryInDB = TRUE;
 				$insertcountry = 'TRUE';
 				//echo "Country in data base";
-				$confirmdbinsert = "country already in the data base.";
+				$confirmCountryInDB = "country already in the data base.";
 				}
-		}
+	}
 
 // **************************************************************************
 // If the variable $countryInDB is false, then $insertcountry should be false
@@ -245,7 +243,7 @@ if ($var == $mccfromform){
 		include 'error.html.php';
 		exit();
 	}
-	$mccInDB = FALSE;
+	$mncInDB = FALSE;
 
 // **************************************
 // Loop to check if the MNC is in the DB.
@@ -257,7 +255,7 @@ if ($var == $mccfromform){
 			$mncs[] = array('mnc' => $var);
 			$mncfromform = $_POST['mnc'];
 
-if ($var == $mncfromform){
+		if ($var == $mncfromform){
 				$mncInDB = TRUE;
 				$insertmnc = 'TRUE';
 				//echo "MNC inserted already in data base. ";
@@ -295,6 +293,16 @@ if ($var == $mncfromform){
 		exit();
 		}
 	}
+
+// We need to check if the operator has been placed as virtual or not, and also put this 
+// information into the data base and associated to the interted operator. 
+
+	 if (isset($_POST['virtualop']))
+  {
+	 $virtualoperator = "El operador es virtualoperator";
+  }
+  	else $virtualoperator = "El operador NO es virtualoperator";
+
 
 
 // *********************************************************************
