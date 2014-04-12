@@ -100,7 +100,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 		$operatorid4imsiranges = $pdo->lastInsertId();
 	
 	}
-	echo "The id to be inserted in the imsiranges table for operatorid is: ". $operatorid4imsiranges;
+	echo "The id to be inserted in the imsiranges table for operatorid is: ". $operatorid4imsiranges ."<br>";
 
 // ******* END OF OPERATOR INSERTION IN DB ;) *********
 
@@ -108,7 +108,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 // Get all countries to check if what the user has inserted is already in the DB
 // *****************************************************************************
 	try{
-		$sql = 'SELECT country FROM country';
+		$sql = 'SELECT id,country FROM country';
 		$result = $pdo->query($sql);
 	}
 	catch(PDOException $e)
@@ -126,7 +126,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	{
 			$var = $row['country'];
 			$var = strtoupper($var);	
-			$countries[] = array('country' => $var);
+			$countries[] = array('id' => $row['id'],'country' => $var);
 		
 			$countryfromform = strtoupper($_POST['country']);
 
@@ -138,6 +138,8 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 				$insertcountry = 'TRUE';
 				//echo "Country in data base";
 				$confirmCountryInDB = "country already in the data base.";
+				$countryid4imsiranges = $row['id'];
+
 				}
 	}
 
@@ -170,13 +172,18 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 		include 'error.html.php';
 		exit();
 		}
+		$countryid4imsiranges = $pdo->lastInsertId();
+
 	}
+
+		echo "The id to be inserted in the imsiranges table for Countryid is: ". $countryid4imsiranges."<br>";
+
 
 // ***************************************************************************
 // Get all mcc's to check if what the user has inserted is already in the DB
 // ***************************************************************************
 	try{
-		$sql = 'SELECT mcc FROM mcc';
+		$sql = 'SELECT id,mcc FROM mcc';
 		$result = $pdo->query($sql);
 	}
 	catch(PDOException $e)
@@ -194,7 +201,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	foreach ($result as $row)
 	{
 			$var = $row['mcc'];
-			$mccs[] = array('mcc' => $var);
+			$mccs[] = array('id'=> $row['id'],'mcc' => $var);
 			$mccfromform = $_POST['mcc'];
 
 if ($var == $mccfromform){
@@ -202,6 +209,7 @@ if ($var == $mccfromform){
 				$insertmcc = 'TRUE';
 				//echo "Country in data base";
 				$confirmMccInDB = "MCC already in the data base.";
+				$mccid4imsiranges = $row['id'];
 				}
 		}
 
@@ -234,13 +242,17 @@ if ($var == $mccfromform){
 		include 'error.html.php';
 		exit();
 		}
+		$mccid4imsiranges = $pdo->lastInsertId();
 	}
+
+		echo "The id to be inserted in the imsiranges table for mccid is: ". $mccid4imsiranges."<br>";
+
 
 // ***************************************************************************
 // Get all mnc's to check if what the user has inserted is already in the DB
 // ***************************************************************************
 	try{
-		$sql = 'SELECT mnc FROM mnc';
+		$sql = 'SELECT id,mnc FROM mnc';
 		$result = $pdo->query($sql);
 	}
 	catch(PDOException $e)
@@ -266,6 +278,7 @@ if ($var == $mccfromform){
 				$insertmnc = 'TRUE';
 				//echo "MNC inserted already in data base. ";
 				$confirmMncInDB = "MNC already in the data base.";
+				$mncid4imsiranges = $row['id'];
 				}
 		}
 
@@ -298,7 +311,11 @@ if ($var == $mccfromform){
 		include 'error.html.php';
 		exit();
 		}
+		$mncid4imsiranges = $pdo->lastInsertId();
 	}
+
+		echo "The id to be inserted in the imsiranges table for mncid is: ". $mncid4imsiranges."<br>";
+
 
 // We need to check if the operator has been placed as virtual or not, and also put this 
 // information into the data base and associated to the interted operator. 
