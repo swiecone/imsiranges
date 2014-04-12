@@ -29,7 +29,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 // ******************************************************************************************
 
 	try{
-		$sql = 'SELECT operator FROM operator';
+		$sql = 'SELECT id, operator FROM operator';
 		$result = $pdo->query($sql);
 	}
 	catch(PDOException $e)
@@ -48,7 +48,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 	foreach ($result as $row)
 	{
 			$var = strtoupper($row['operator']);
-			$operators[] = array('operator' => $var);
+			$operators[] = array('id' =>$row['id'],'operator' => $var);
 		
 			$operatorfromform = strtoupper($_POST['operator']);
 
@@ -61,6 +61,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 				$operatorInDB = TRUE;
 				$insertoperator = 'TRUE';
 				$confirmOperatorInDB = "Operator already in the data base.";
+				$operatorid4imsiranges = $row['id'];
 			//	echo "Operator already in the data base";
 			}
 			
@@ -95,7 +96,12 @@ include $_SERVER['DOCUMENT_ROOT'] . '/imsiranges/web/includes/db.inc.php';
 		include 'error.html.php';
 		exit();
 		}
+
+		$operatorid4imsiranges = $pdo->lastInsertId();
+	
 	}
+	echo "The id to be inserted in the imsiranges table for operatorid is: ". $operatorid4imsiranges;
+
 // ******* END OF OPERATOR INSERTION IN DB ;) *********
 
 // *****************************************************************************
