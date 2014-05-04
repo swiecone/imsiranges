@@ -323,8 +323,35 @@ if ($var == $mccfromform){
 	 if (isset($_POST['virtualop']))
   {
 	 $virtualoperator = "El operador es virtualoperator";
+	 $virtualop4imsiranges = 1;
   }
-  	else $virtualoperator = "El operador NO es virtualoperator";
+  	else 
+  {
+  	 $virtualoperator = "El operador NO es virtualoperator";
+	 $virtualop4imsiranges = 0;
+  }
+
+
+// ************************************************************************
+// After checking all parameters and inserting (or not) into corresponding
+// tables, we need to insert ids into imsiranges general table
+// ************************************************************************
+
+try{
+		$sql = "INSERT INTO imsiranges SET countryid = '$countryid4imsiranges', operatorid = '$operatorid4imsiranges',
+							mccid = '$mccid4imsiranges', mncid = '$mncid4imsiranges', 
+							virtualoperatorid = '$virtualop4imsiranges' ";	
+		$s = $pdo->prepare($sql);
+		$s->execute();
+		$confirmImsirangesInDB = "New IMSI RANGE inserted into imsiranges DB!!";
+		}
+		catch(PDOException $e)
+		{
+		$error = 'Error adding submitted Imsiranges in Data Base.'. $e->getMessage();
+		include 'error.html.php';
+		exit();
+		}
+
 
 
 

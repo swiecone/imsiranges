@@ -115,6 +115,11 @@ Let's show the information for the bloody MNC's!!
 <?php echo "Virtual Operator Information :  ". $virtualoperator ?>
 </p>
 
+<p>
+<?php echo "New IMSI RANGE has been inserted inyo DB:  ". $confirmImsirangesInDB ?>
+</p>
+
+
 <a href="."> Go back to main menu </a>
 <br>
 <br>
